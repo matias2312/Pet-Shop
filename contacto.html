@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Franco's Pet Shop || Farmacia</title>
+    <link rel="shortcut icon" href="./assets/img/dog.png" type="image/x-icon">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body id="app">
+    <header>
+        <nav class="sticky-lg-top d-flex align-items-center navbar navbar-expand-lg container">
+            <div>
+                <a class="navbar-brand m-2" href="#">
+                    <img src="./assets/img/dog.png" jsaction="load:XAeZkd;" jsname="HiaYvf" class="n3VNCb KAlRDb"
+                        alt="Champion Logo and symbol, meaning, history, PNG, brand" data-noaft="1"
+                        style="height: 80px;">
+                </a>
+            </div>
+            <div>
+                <h1 class="francoTitulo">Franco</h1>
+            </div>
+            <div class="messi container-fluid d-flex align-items-center">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="messi collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link p-3 active fuente text-uppercase fw-bolder"
+                                href="./index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active  p-3 fuente text-uppercase fw-bolder"
+                                href="./farmacia.html">Farmacia</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active p-3  fuente text-uppercase fw-bolder"
+                                href="./juguetes.html">Juguetes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active p-3  fuente text-uppercase fw-bolder" href="#">Contacto</a>
+                        </li>
+                    </ul>
+                    <button type="button" class="btn bg-gradient carritoDeCompras d-flex justify-content-evenly"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <img src="./assets/img/shoppingcart.png" class="carritoDeCompras-img" alt="bag"><span
+                            class="carrito-cantidad">{{cantidadDeProductos}}</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Carrito de Compras</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div v-for="producto in carrito">
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img :src="producto.imagen" class="img-fluid rounded-start" :alt="producto.nombre">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{producto.nombre}}</h5>
+                                        <div class="d-flex">
+                                            <p class="card-text">cantidad: {{producto.cantidad}}</p>
+                                            <div v-if="producto.cantidad == 1">
+                                                <button class="bran bg-danger" disabled
+                                                    @click="restar(producto)">-</button>
+                                            </div>
+                                            <button v-else="" class="bran bg-danger"
+                                                @click="restar(producto)">-</button>
+                                            <button class="bran bg-primary" @click="carritoCompras(producto)">+</button>
+                                        </div>
+                                        <p class="card-text fw-bolder">c/u ${{producto.precio}}</p>
+                                        <button class="eliminar bg-danger btn text-light"
+                                            @click="eliminarProducto(producto)">Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p class="totalAPagar">Total a pagar: ${{totalAPagar}}</p>
+                </div>
+                <div v-if="carrito.length != 0" class="modal-footer">
+                    <button type="button" class="btn btn-dark">Pagar</button>
+                </div>
+                <div v-else="" class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-dark"
+                        aria-label="Close">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <main class="d-flex justify-content-center align-items-center">
+        <div class="shadow p-4 m-3">
+            <form class="w-100" action="#" method="get"
+                onsubmit="alert('Gracias por enviar su informacion!');return false">
+                <fieldset class="row">
+                    <label for="name">Nombre:</label>
+                    <input class="formulario" type="text" name="name" id="name">
+                </fieldset>
+                <fieldset class="row">
+                    <label for="apellido">Apellido:</label>
+                    <input class="formulario" type="text" name="apellido" id="apellido">
+                </fieldset>
+                <fieldset class="row">
+                    <label for="telefono">Telefono:</label>
+                    <input type="text" name="telefono" id="telefono">
+                </fieldset>
+                <fieldset class="d-flex">
+                    <legend class="col-5">Mascota/s:</legend>
+                    <input type="checkbox" name="perro" id="animales">
+                    <label for="" class="d-flex align-items-center m-2">Perro</label>
+                    <input type="checkbox" name="gato" id="gato">
+                    <label for="" class="d-flex align-items-center m-2">Gato</label>
+                </fieldset>
+
+                <fieldset class="row">
+                    <label for="email">Email:</label>
+                    <input class="formulario" type="email" name="email" id="email" placeholder="name@example.com">
+                </fieldset>
+
+                <fieldset class="row">
+                    <label for="mensagge">Comentarios:</label>
+                    <textarea class="formulario" name="mensagge" id="mensagge" cols="50" rows="8"></textarea>
+                </fieldset>
+
+
+                <div class="d-flex justify-content-end pt-2">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Enviar
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Gracias por brindarnos tu
+                                        informacion!</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="text-center modal-body">
+                                    <iframe src="https://gifer.com/embed/g3eJ" width=480 height=400 a></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+    </main>
+    <footer class="pt-5 pb-3 ">
+        <div class="container">
+            <div class="row">
+                <div class="col order-5 m">
+                    <h5>Suscríbete a Nuestro Newsletter</h5>
+                    <hr>
+                    <ul>
+                        <li class="pb-3 m-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Ingresa tu E-mail "
+                                    aria-label="Recipient's username with two button addons">
+                                <button class="btn btn-outline-secondary" type="button" style="border-left:none;"><img
+                                        src="./assets/img/email-logo-png-1125.png" alt=""></button>
+                            </div>
+                        </li>
+                        <li class="pb-2 pt-2 m-4">
+                            <p> Inscribete para recibir noticias!</p>
+                        </li>
+                    </ul>
+                    <div class="col m-5">
+                        <div>
+                            <button type="button" class="btn btn-outline-light m-3"><img
+                                    src="./assets/img/dog_animal_icon_123538.png" class="pay img-fluid"
+                                    alt="ol"></button>
+                            <button type="button" class="btn btn-outline-light"><img
+                                    src="./assets/img/black_cat_icon_177458.png" class=" pay img-fluid" alt="ol1">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md order-1 d-flex flex-column align-content-between ">
+                    <h5>Nuestras Redes</h5>
+                    <hr>
+                    <div class="imagencita m-3">
+                        <a target="_blank" href="https://www.facebook.com/"><img src="./assets/img/facebook.png"
+                                alt="logofacebook"></a>
+                        <a target="_blank" href="https://www.instagram.com/"><img src="./assets/img/instagram.png"
+                                alt="logoinstagram"></a>
+                        <a target="_blank" href="https://wa.link/d73goe"><img src="./assets/img/whatsapp.png"
+                                alt="logowsp"></a>
+                    </div>
+                    <div class="col-md m-3">
+                        <a href="#"><img src="./assets/img/dog.png" class=" logo img-fluid w-25" alt="logo"></a>
+                    </div>
+                    <div class="col-md m-3">
+                        <ul>
+                            <li>&copy; 2022 Pet Shop.</li>
+                            <li>Todos los derechos reservados. <span><a href="#">INICIO.</a></span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md order-1">
+                    <h5>Dirección</h5>
+                    <hr>
+                    <ul>
+                        <li>
+                            Rio de Janeiro 300 (Caballito), Buenos Aires. Argentina.
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+
+
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="./assets/js/main.js"></script>
+</body>
+
+</html>

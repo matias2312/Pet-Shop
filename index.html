@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Franco's Pet Shop</title>
+    <link rel="shortcut icon" href="./assets/img/dog.png" type="image/x-icon">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+</head>
+
+<body id="app">
+    <header class="positionSticky">
+        <nav class="sticky-lg-top d-flex align-items-center navbar navbar-expand-lg container">
+            <div>
+                <a class="navbar-brand m-2" href="#">
+                    <img src="./assets/img/dog.png" jsaction="load:XAeZkd;" jsname="HiaYvf" class="n3VNCb KAlRDb"
+                        alt="Champion Logo and symbol, meaning, history, PNG, brand" data-noaft="1"
+                        style="height: 80px;">
+                </a>
+
+            </div>
+            <div>
+                <h1 class="francoTitulo">Franco</h1>
+            </div>
+            <div class="messi container-fluid d-flex align-items-center">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="messi collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link p-3 active fuente text-uppercase fw-bolder" href="#">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active  p-3 fuente text-uppercase fw-bolder"
+                                href="./farmacia.html">Farmacia</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active p-3  fuente text-uppercase fw-bolder"
+                                href="./juguetes.html">Juguetes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active p-3  fuente text-uppercase fw-bolder"
+                                href="./contacto.html">Contacto</a>
+                        </li>
+                    </ul>
+                    <button type="button" class="btn bg-gradient carritoDeCompras d-flex justify-content-evenly"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <img src="./assets/img/shoppingcart.png" class="carritoDeCompras-img" alt="bag"><span
+                            class="carrito-cantidad">{{cantidadDeProductos}}</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Carrito de Compras</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div v-for="producto in carrito">
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img :src="producto.imagen" class="img-fluid rounded-start" :alt="producto.nombre">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{producto.nombre}}</h5>
+                                        <div class="d-flex">
+                                            <p class="card-text">cantidad: {{producto.cantidad}}</p>
+                                            <div v-if="producto.cantidad == 1">
+                                                <button class="bran bg-danger" disabled
+                                                    @click="restar(producto)">-</button>
+                                            </div>
+                                            <button v-else="" class="bran bg-danger"
+                                                @click="restar(producto)">-</button>
+                                            <button class="bran bg-primary" @click="carritoCompras(producto)">+</button>
+                                        </div>
+                                        <p class="card-text fw-bolder">c/u ${{producto.precio}}</p>
+                                        <button class="eliminar bg-danger btn text-light"
+                                            @click="eliminarProducto(producto)">Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p class="totalAPagar">Total a pagar: ${{totalAPagar}}</p>
+                </div>
+                <div v-if="carrito.length != 0" class="modal-footer">
+                    <button type="button" class="btn btn-dark">Pagar</button>
+                </div>
+                <div v-else="" class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-dark"
+                        aria-label="Close">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- carousel -->
+
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="./assets/img/gato.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="./assets/img/dog3.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="./assets/img/dog4.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="./assets/img/dog1.jpg" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- fin carousel -->
+    <h2 class="tituloTienda text-center">Bienvenidos a Franco!</h2>
+    <div class="container-fluid">
+        <div class="row text-center">
+            <div class="col-lg-6">
+                <iframe class="video" src="https://www.youtube.com/embed/ARHYgb5JTeA"
+                    title="Video Publicitario para Más que perros (peluquería canina)" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+            <div class="quienesSomos col-lg-6">
+                <h2 class="mt-5">Quienes somos?</h2>
+                <h6>Franco es mi mascota, por eso el nombre de mi tienda. Mi mejor amigo se lo merecía... no?!</h6>
+                <p>Como también se lo merece el tuyo, y por eso estás acá..! Para darle Lo MEJOR!</p>
+                <p>Te cuento que somos una tienda creada para ofrecer lo mejor a nuestras mascotas. </p>
+                <p>Decidimos crear una empresa que ayude a todos a encontrar buenos productos a precios razonables,
+                    ayudar a otros a definir qué es lo mejor para su mascota dentro de sus posibilidades.</p>
+                <p>Nuestro principal objetivo es otorgar productos de calidad aprobada por nosotros, esto quiere
+                    decir que No vendemos alimentos o productos que nosotros no usaríamos en nuestros propios
+                    mejores-amigos.
+                    Compartimos nuestro amor hacia las mascotas, por lo que les brindamos la mejor calidad de atención y
+                    el
+                    asesoramiento necesario para su cuidado y protección.
+                </p>
+            </div>
+        </div>
+
+        <div class="row text-center mt-5">
+            <div class="divUbicacion">
+                <h3 class="dark">¿Dónde nos encotramos?</h3>
+
+            </div>
+
+
+
+            <div class="mapcontainer">
+                <div class="googleMaps ">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.686925037962!2d-58.4303837!3d-34.6120774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca429815227f%3A0x5d302e497c2cda87!2sR%C3%ADo%20de%20Janeiro%20300%2C%20C1405CCB%20CABA!5e0!3m2!1ses!2sar!4v1657312308407!5m2!1ses!2sar"
+                        class="mapita" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="pt-5 pb-3 ">
+        <div class="container">
+            <div class="row">
+                <div class="col order-5 m">
+                    <h5>Suscríbete a Nuestro Newsletter</h5>
+                    <hr>
+                    <ul>
+                        <li class="pb-3 m-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Ingresa tu E-mail "
+                                    aria-label="Recipient's username with two button addons">
+                                <button class="btn btn-outline-secondary" type="button" style="border-left:none;"><img
+                                        src="./assets/img/email-logo-png-1125.png" alt=""></button>
+                            </div>
+                        </li>
+                        <li class="pb-2 pt-2 m-4">
+                            <p> Inscribete para recibir noticias!</p>
+                        </li>
+                    </ul>
+                    <div class="col m-5">
+                        <div>
+                            <button type="button" class="btn btn-outline-light m-3"><img
+                                    src="./assets/img/dog_animal_icon_123538.png" class="pay img-fluid"
+                                    alt="ol"></button>
+                            <button type="button" class="btn btn-outline-light"><img
+                                    src="./assets/img/black_cat_icon_177458.png" class=" pay img-fluid" alt="ol1">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md order-1 d-flex flex-column align-content-between ">
+                    <h5>Nuestras Redes</h5>
+                    <hr>
+                    <div class="imagencita m-3">
+                        <a target="_blank" href="https://www.facebook.com/"><img src="./assets/img/facebook.png"
+                                alt="logofacebook"></a>
+                        <a target="_blank" href="https://www.instagram.com/"><img src="./assets/img/instagram.png"
+                                alt="logoinstagram"></a>
+                        <a target="_blank" href="https://wa.link/d73goe"><img src="./assets/img/whatsapp.png"
+                                alt="logowsp"></a>
+                    </div>
+                    <div class="col-md m-3">
+                        <a href="#"><img src="./assets/img/dog.png" class=" logo img-fluid w-25" alt="logo"></a>
+                    </div>
+                    <div class="col-md m-3">
+                        <ul>
+                            <li>&copy; 2022 Pet Shop.</li>
+                            <li>Todos los derechos reservados. <span><a href="#">INICIO.</a></span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md order-1">
+                    <h5>Dirección</h5>
+                    <hr>
+                    <ul>
+                        <li>
+                            Rio de Janeiro 300 (Caballito), Buenos Aires. Argentina.
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+    </footer>
+
+
+
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="./assets/js/main.js"></script>
+</body>
+
+</html>
